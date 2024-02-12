@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 public class Tuition {
     
     private int id;
-    private int creditValue;
+    private double creditValue;
     private int programId;
     private int periodId;
 
-    public Tuition(int creditValue, int programId, int periodId) {
+    public Tuition(double creditValue, int programId, int periodId) {
         this.creditValue = creditValue;
         this.programId = programId;
         this.periodId = periodId;

@@ -46,11 +46,24 @@ public class RepositoryTuitionMysqlImpl implements RepositoryTuition{
         return tuition;
     }
 
+    public Tuition findByPeriodIdAndProgram(int period_id, int program_id) {
+        Tuition tuition = null;
+        try (Statement stmt = getConnection().createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM tuitions WHERE period_id = " + period_id + " AND program_id = " + program_id);) {
+            if (rs.next()) {
+                tuition = createTuition(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tuition;
+    }
+
     @Override
     public void create(Tuition tuiton) {
         
         try (PreparedStatement pstmt = getConnection().prepareStatement("INSERT INTO tuitions (credit_cost, program_id, period_id) VALUES (?, ?, ?)");) {
-            pstmt.setInt(1, tuiton.getCreditValue());
+            pstmt.setDouble(1, tuiton.getCreditValue());
             pstmt.setInt(2, tuiton.getProgramId());
             pstmt.setInt(3, tuiton.getPeriodId());
             pstmt.executeUpdate();
@@ -76,7 +89,7 @@ public class RepositoryTuitionMysqlImpl implements RepositoryTuition{
     public void update(Tuition tuiton) {
         
         try (PreparedStatement pstmt = getConnection().prepareStatement("UPDATE tuitions SET credit_cost = ?, program_id = ?, period_id = ? WHERE tuition_id = ?");) {
-            pstmt.setInt(1, tuiton.getCreditValue());
+            pstmt.setDouble(1, tuiton.getCreditValue());
             pstmt.setInt(2, tuiton.getProgramId());
             pstmt.setInt(3, tuiton.getPeriodId());
             pstmt.setInt(4, tuiton.getId());
@@ -88,7 +101,7 @@ public class RepositoryTuitionMysqlImpl implements RepositoryTuition{
     }
 
     private Tuition createTuition(ResultSet rs) throws SQLException {
-        return new Tuition(rs.getInt("tuition_id"), rs.getInt("credit_cost"), rs.getInt("program_id"), rs.getInt("period_id"));
+        return new Tuition(rs.getInt("tuition_id"), rs.getDouble("credit_cost"), rs.getInt("program_id"), rs.getInt("period_id"));
     }
 
 }

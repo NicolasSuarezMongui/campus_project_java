@@ -53,20 +53,20 @@ public class RepositoryRegisterMysqlImpl implements RepositoryRegister{
     }
 
     @Override
-    public Register findByStudentId(int student_id) {
+    public List<Register> listByStudentId(int student_id) {
         
-        Register register = null;
+        List<Register> listRegisters = new ArrayList<>();
         try (PreparedStatement pstmt = getConnection().prepareStatement("SELECT * FROM registers WHERE student_id = ?");) {
             pstmt.setInt(1, student_id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    register = createRegister(rs);
+                    listRegisters.add(createRegister(rs));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return register;
+        return listRegisters;
 
     }
 

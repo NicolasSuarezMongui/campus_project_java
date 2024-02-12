@@ -28,13 +28,8 @@ public class ServiceRegisterImpl implements ServiceRegister{
         }
     }
 
-    public Register findByStudentId(int student_id) throws RegisterException{
-        Register register = crudRepositoryRegister.findByStudentId(student_id);
-        if(register == null){
-            throw new RegisterException("Register not found");
-        } else {
-            return register;
-        }
+    public List<Register> listByStudentId(int student_id){
+        return crudRepositoryRegister.listByStudentId(student_id);
     }
 
     public void create(Register register){

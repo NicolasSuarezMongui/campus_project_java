@@ -46,4 +46,8 @@ public class ServiceTeacherImpl implements ServiceTeacher{
         crudRepositoryTeacher.delete(teacher);
     }
 
+    public void delete(String document) throws PersonNullException {
+        crudRepositoryTeacher.delete(document);
+    }
+
 }

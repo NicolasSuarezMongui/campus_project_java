@@ -9,6 +9,8 @@ public interface ServiceTuition {
     
     List<Tuition> toList();
 
+    Tuition findByPeriodIdAndProgram(int period_id, int program_id);
+
     Tuition findById(int tuiton_id) throws FareNullException;
 
     void create(Tuition tuiton);

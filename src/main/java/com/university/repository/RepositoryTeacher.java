@@ -20,4 +20,6 @@ public interface RepositoryTeacher {
 
     void delete(Teacher teacher);
 
+    void delete(String document);
+
 }

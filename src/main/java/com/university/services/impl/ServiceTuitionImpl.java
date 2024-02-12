@@ -28,6 +28,10 @@ public class ServiceTuitionImpl implements ServiceTuition{
         }
     }
 
+    public Tuition findByPeriodIdAndProgram(int period_id, int program_id){
+        return crudRepositoryTuition.findByPeriodIdAndProgram(period_id, program_id);
+    }
+
     public void create(Tuition tuiton){
         crudRepositoryTuition.create(tuiton);
     }

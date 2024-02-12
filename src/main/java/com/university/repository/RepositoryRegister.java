@@ -10,7 +10,7 @@ public interface RepositoryRegister {
 
     Register findById(int register_id);
 
-    Register findByStudentId(int student_id);
+    List<Register> listByStudentId(int student_id);
 
     void create(Register register);
 

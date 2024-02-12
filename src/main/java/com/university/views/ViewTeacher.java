@@ -3,21 +3,27 @@ package com.university.views;
 import java.util.List;
 
 import com.university.exceptions.personexceptions.PersonExceptionInsertDataBase;
+import com.university.exceptions.personexceptions.PersonNullException;
 import com.university.repository.impl.impladdress.RepositoryAddressMysqlImpl;
 import com.university.repository.impl.implcity.RepositoryCityMysqlImpl;
+import com.university.repository.impl.implperson.RepositoryPersonMysqlImpl;
 import com.university.repository.models.Address;
 import com.university.repository.models.City;
 import com.university.repository.models.Department;
 import com.university.repository.models.Person;
+import com.university.repository.models.Teacher;
 import com.university.services.ServiceAddress;
 import com.university.services.ServiceCity;
+import com.university.services.ServicePerson;
 import com.university.services.impl.ServiceAddressImpl;
 import com.university.services.impl.ServiceCityImpl;
+import com.university.services.impl.ServicePersonImpl;
 
 public class ViewTeacher extends ViewMain{
 
     private static final ServiceAddress serviceAddress = new ServiceAddressImpl(new RepositoryAddressMysqlImpl());
     private static final ServiceCity serviceCity = new ServiceCityImpl(new RepositoryCityMysqlImpl());
+    private static final ServicePerson servicePerson = new ServicePersonImpl(new RepositoryPersonMysqlImpl());
 
     public static void startMenu() {
 
@@ -160,10 +166,80 @@ public class ViewTeacher extends ViewMain{
     }
 
     private static void modifyTeacher() {
-        
+        sc.nextLine();
+        System.out.println("Modifying a Teacher...");
+        System.out.print("\t Teacher's Document: ");
+        String document = sc.nextLine();
+        try {
+            Person teacher = serviceTeacher.findByDocument(document);
+
+            System.out.println("Modifying Teacher: ");
+            System.out.println("Name: ");
+            String name = sc.nextLine();
+            teacher.setFirstName((name.length()>0) ? name : teacher.getFirstName());
+            System.out.println("Last Name: ");
+            String lastName = sc.nextLine();
+            teacher.setLastName((lastName.length()>0) ? lastName : teacher.getLastName());
+            System.out.println("Phone: ");
+            String phone = sc.nextLine();
+            teacher.setPhone((phone.length()>0) ? phone : teacher.getPhone());
+            List<Address> addresses = serviceAddress.toList();
+            System.out.println("Address List");
+            int op_address = 0;
+            for (int i=0; i<addresses.size(); i++) {
+                System.out.println("\t" + (i+1) + ") " + addresses.get(i).getAddress());
+            }
+            do{
+                System.out.print("\t Choose an Address: ");
+                op_address = sc.nextInt();
+            }while(op_address < 1 || op_address > addresses.size());
+            int address = addresses.get(op_address-1).getId();
+            teacher.setAddressId(address);
+            List<City> cities = serviceCity.toList();
+            System.out.println("Cities List");
+            for (int i=0; i<cities.size(); i++) {
+                System.out.println("\t" + (i+1) + ") " + cities.get(i).getName());
+            }
+            int op_city = 0;
+            do{
+                System.out.print("\t Choose a City: ");
+                op_city = sc.nextInt();
+            }while(op_city < 1 || op_city > cities.size());
+            int city = cities.get(op_city-1).getId();
+            teacher.setCityId(city);
+
+            teacher.print();
+            servicePerson.update(teacher);
+            List<Department> departments = serviceDepartment.toList();
+            System.out.println("Departments List");
+            for (int i=0; i<departments.size(); i++) {
+                System.out.println("\t" + (i+1) + ") " + departments.get(i).getName());
+            }
+            int op_department = 0;
+            do{
+                System.out.print("\t Choose a Department: ");
+                op_department = sc.nextInt();
+            }while(op_department < 1 || op_department > departments.size());
+            int department = departments.get(op_department-1).getId();
+            serviceTeacher.update(new Teacher(teacher.getId(), department));
+
+        } catch (PersonNullException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void deleteTeacher() {
+
+        System.out.println("Deleting a Teacher...");
+        sc.nextLine();
+        System.out.print("\t Teacher's Document: ");
+        String document = sc.nextLine();
+        try {
+            serviceTeacher.delete(document);
+            System.out.println("Teacher deleted successfully!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
     

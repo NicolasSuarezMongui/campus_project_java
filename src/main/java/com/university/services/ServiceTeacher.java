@@ -19,6 +19,8 @@ public interface ServiceTeacher {
 
     void update(Teacher teacher);
 
-    void delete(Teacher teacher);
+    void delete(Teacher teacher) throws PersonNullException;
+
+    void delete(String document) throws PersonNullException;
 
 }

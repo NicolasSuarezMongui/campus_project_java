@@ -177,13 +177,17 @@ public class ViewStudent extends ViewMain{
         String document = sc.nextLine();
         try {
             Person student = serviceStudent.findByDocument(document);
+
             System.out.println("Editing Student: ");
             System.out.print("Name: ");
-            student.setFirstName((sc.nextLine().length() > 0) ? sc.nextLine() : student.getFirstName());
+            String newName = sc.nextLine();
+            student.setFirstName((newName.length() > 0) ? newName : student.getFirstName());
             System.out.print("Last Name: ");
-            student.setLastName((sc.nextLine().length() > 0) ? sc.nextLine() : student.getLastName());
+            String newLastName = sc.nextLine();
+            student.setLastName((newLastName.length() > 0) ? newLastName : student.getLastName());
             System.out.print("Phone: ");
-            student.setPhone((sc.nextLine().length() > 0) ? sc.nextLine() : student.getPhone());
+            String newPhone = sc.nextLine();
+            student.setPhone((newPhone.length() > 0) ? newPhone : student.getPhone());
             List<Address> addresses = serviceAddress.toList();
             System.out.println("Address List");
             int op_address = 0;

@@ -2,6 +2,7 @@ package com.university.repository.impl.implstudent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -30,6 +31,22 @@ public class RepositoryStudentMysqlImpl implements RepositoryStudent{
         return repositoryPersonMysqlImpl.findByDocument(document);
     }
 
+    public Student findById(int student_id) {
+        String sql = "SELECT * FROM students WHERE person_id = ?";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)){
+            stmt.setInt(1, student_id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return createStudent(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public void create(Student student) {
 
@@ -56,6 +73,8 @@ public class RepositoryStudentMysqlImpl implements RepositoryStudent{
         create(student);
 
     }
+
+
 
     @Override
     public void update(Student student) {
@@ -96,6 +115,10 @@ public class RepositoryStudentMysqlImpl implements RepositoryStudent{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private Student createStudent(ResultSet rs) throws SQLException {
+        return new Student(rs.getInt("program_id"), rs.getInt("person_id"));
     }
 
 }

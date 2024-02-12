@@ -13,6 +13,10 @@ public interface ServiceStudent {
     
     Person findByDocument(String document) throws PersonNullException;
 
+    Student findById(int student_id) throws PersonNullException;
+
+    int getId(String document) throws PersonNullException;
+
     void create(Student student);
 
     void create(Person person, int id_program) throws PersonExceptionInsertDataBase;

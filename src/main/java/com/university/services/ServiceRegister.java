@@ -11,7 +11,7 @@ public interface ServiceRegister {
 
     Register findById(int register_id) throws RegisterException;
 
-    Register findByStudentId(int student_id) throws RegisterException;
+    List<Register> listByStudentId(int student_id);
 
     void create(Register register);
 

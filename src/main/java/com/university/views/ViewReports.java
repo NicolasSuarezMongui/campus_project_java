@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.university.exceptions.personexceptions.PersonNullException;
 import com.university.repository.models.Schedule;
+import com.university.services.impl.ServiceReportsImpl;
 
 public class ViewReports extends ViewMain{
 
@@ -54,8 +55,19 @@ public class ViewReports extends ViewMain{
     }
 
     private static void studentSemesterCost() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'studentSemesterCost'");
+        ServiceReportsImpl serviceReports = new ServiceReportsImpl();
+        sc.nextLine();
+        System.out.println("Enter the student's document: ");
+        String document = sc.nextLine();
+        System.out.println("Enter the period id: ");
+        int period = sc.nextInt();
+        try {
+            int studentId = serviceStudent.getId(document);
+            System.out.println("The cost of the semester for the student with ID: " + studentId + " is: " + serviceReports.semesterCost(studentId, period));
+        } catch (PersonNullException e) {
+            e.printStackTrace();
+        }
+        sc.next();
     }
 
     private static void incomePerSemester() {

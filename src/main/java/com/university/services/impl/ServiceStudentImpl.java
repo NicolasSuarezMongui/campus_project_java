@@ -30,6 +30,10 @@ public class ServiceStudentImpl implements ServiceStudent{
         }
     }
 
+    public Student findById(int student) {
+        return crudRepositoryStudent.findById(student);
+    }
+
     public int getId(String document) throws PersonNullException {
         Person person = crudRepositoryStudent.findByDocument(document);
         if(person == null){

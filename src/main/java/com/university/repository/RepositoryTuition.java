@@ -7,6 +7,8 @@ import com.university.repository.models.Tuition;
 public interface RepositoryTuition {
     public List<Tuition> toList();
 
+    public Tuition findByPeriodIdAndProgram(int period_id, int program_id);
+
     public Tuition findById(int tuiton_id);
 
     public void create(Tuition tuiton);
