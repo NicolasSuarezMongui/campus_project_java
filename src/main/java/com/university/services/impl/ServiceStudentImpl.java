@@ -30,6 +30,16 @@ public class ServiceStudentImpl implements ServiceStudent{
         }
     }
 
+    public int getId(String document) throws PersonNullException {
+        Person person = crudRepositoryStudent.findByDocument(document);
+        if(person == null){
+            throw new PersonNullException("Person not found");
+        } else {
+            return person.getId();
+        }
+
+    }
+
     public void create(Student student) {
         crudRepositoryStudent.create(student);
     }
