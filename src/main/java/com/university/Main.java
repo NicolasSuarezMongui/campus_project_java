@@ -17,9 +17,6 @@ import com.university.utils.connectionsdb.connectiondbmysql.ConexionBDMysql;
 
 public class Main {
     public static void main(String[] args) {
-        RepositoryPersonMysqlImpl repositoryPersonMysqlImpl = new RepositoryPersonMysqlImpl();
-        for (Person person : repositoryPersonMysqlImpl.toList()) {
-            System.out.println(person);
-        }
+        System.out.println("10:00:00".compareTo("10:00:00"));
     }
 }
