@@ -6,19 +6,24 @@ import com.university.exceptions.personexceptions.PersonExceptionInsertDataBase;
 import com.university.exceptions.personexceptions.PersonNullException;
 import com.university.repository.impl.impladdress.RepositoryAddressMysqlImpl;
 import com.university.repository.impl.implcity.RepositoryCityMysqlImpl;
+import com.university.repository.impl.implperson.RepositoryPersonMysqlImpl;
 import com.university.repository.models.Address;
 import com.university.repository.models.City;
 import com.university.repository.models.Person;
 import com.university.repository.models.Program;
+import com.university.repository.models.Student;
 import com.university.services.ServiceAddress;
 import com.university.services.ServiceCity;
+import com.university.services.ServicePerson;
 import com.university.services.impl.ServiceAddressImpl;
 import com.university.services.impl.ServiceCityImpl;
+import com.university.services.impl.ServicePersonImpl;
 
 public class ViewStudent extends ViewMain{
 
     private static final ServiceAddress serviceAddress = new ServiceAddressImpl(new RepositoryAddressMysqlImpl());
     private static final ServiceCity serviceCity = new ServiceCityImpl(new RepositoryCityMysqlImpl());
+    private static final ServicePerson servicePerson = new ServicePersonImpl(new RepositoryPersonMysqlImpl());
 
     public static void startMenu() {
 
@@ -141,9 +146,9 @@ public class ViewStudent extends ViewMain{
             serviceStudent.create(person, program);
             System.out.println(person.getId());
             System.out.println("Student created successfully!");
-        } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
+        } catch (PersonExceptionInsertDataBase e) {
+            System.out.println(e.getMessage());
+            //e.printStackTrace();
         }
         sc.next();
     }
@@ -166,8 +171,65 @@ public class ViewStudent extends ViewMain{
     }
 
     private static void modifyStudent() {
-        
-        
+        sc.nextLine();
+        System.out.println("Editing a Student...");
+        System.out.print("\t Student's Document: ");
+        String document = sc.nextLine();
+        try {
+            Person student = serviceStudent.findByDocument(document);
+            System.out.println("Editing Student: ");
+            System.out.print("Name: ");
+            student.setFirstName((sc.nextLine().length() > 0) ? sc.nextLine() : student.getFirstName());
+            System.out.print("Last Name: ");
+            student.setLastName((sc.nextLine().length() > 0) ? sc.nextLine() : student.getLastName());
+            System.out.print("Phone: ");
+            student.setPhone((sc.nextLine().length() > 0) ? sc.nextLine() : student.getPhone());
+            List<Address> addresses = serviceAddress.toList();
+            System.out.println("Address List");
+            int op_address = 0;
+            for (int i=0; i<addresses.size(); i++) {
+                System.out.println("\t" + (i+1) + ") " + addresses.get(i).getAddress());
+            }
+            do{
+                System.out.print("\t Choose an Address: ");
+                op_address = sc.nextInt();
+            }while(op_address < 1 || op_address > addresses.size());
+            int address = addresses.get(op_address-1).getId();
+            student.setAddressId(address);
+            List<City> cities = serviceCity.toList();
+            System.out.println("Cities List");
+            for (int i=0; i<cities.size(); i++) {
+                System.out.println("\t" + (i+1) + ") " + cities.get(i).getName());
+            }
+            int op_city = 0;
+            do{
+                System.out.print("\t Choose a City: ");
+                op_city = sc.nextInt();
+            }while(op_city < 1 || op_city > cities.size());
+            int city = cities.get(op_city-1).getId();
+            student.setCityId(city);
+
+            student.print();
+
+            servicePerson.update(student);
+            List<Program> programs = serviceProgram.toList();
+            int op_program = 0;
+            System.out.println("Program List");
+            for (int i=0; i<programs.size(); i++) {
+                System.out.println("\t" + (i+1) + ") " + programs.get(i).getName());
+            }
+            do{
+                System.out.print("\t Choose a Program: ");
+                op_program = sc.nextInt();
+            }while(op_program < 1 || op_program > programs.size());
+            int program = programs.get(op_program-1).getId();
+            serviceStudent.update(new Student(program, student.getId()));
+
+        }catch (PersonNullException e) {
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
     private static void deleteStudent() {

@@ -2,7 +2,6 @@ package com.university.views;
 
 import com.university.exceptions.departmentexceptions.DepartmentNullException;
 import com.university.repository.models.Department;
-import com.university.repository.models.Program;
 
 public class ViewDepartment extends ViewMain {
 
