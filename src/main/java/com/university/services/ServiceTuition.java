@@ -2,14 +2,14 @@ package com.university.services;
 
 import java.util.List;
 
-import com.university.exceptions.fareexceptions.FareException;
+import com.university.exceptions.fareexceptions.FareNullException;
 import com.university.repository.models.Tuition;
 
 public interface ServiceTuition {
     
     List<Tuition> toList();
 
-    Tuition findById(int tuiton_id) throws FareException;
+    Tuition findById(int tuiton_id) throws FareNullException;
 
     void create(Tuition tuiton);
 

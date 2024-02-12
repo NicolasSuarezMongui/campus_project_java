@@ -28,4 +28,17 @@ public class Signature {
         this.periodId = periodId;
     }
 
+    public void print(){
+        System.out.println("-".repeat(30));
+        System.out.println("\t       Signature's ID: " + id);
+        System.out.println("\t    Signature's Name: " + name);
+        System.out.println("\tSignature's Credits: " + credits);
+        System.out.println("\tSignature's Capacity: " + capacity);
+        System.out.println("\tSignature's Duration: " + duration);
+        System.out.println("\tSignature's Teacher ID: " + teacherId);
+        System.out.println("\t  Signature's Course ID: " + courseId);
+        System.out.println("\t Signature's Period ID: " + periodId);
+        System.out.println("-".repeat(30));
+    }
+
 }

@@ -20,4 +20,13 @@ public class Tuition {
         this.periodId = periodId;
     }
 
+    public void print(){
+        System.out.println("-".repeat(30));
+        System.out.println("\t          Tuition's ID: " + id);
+        System.out.println("\tTuition's Credit Value: " + creditValue);
+        System.out.println("\t  Tuition's Program ID: " + programId);
+        System.out.println("\t   Tuition's Period ID: " + periodId);
+        System.out.println("-".repeat(30));
+    }
+
 }

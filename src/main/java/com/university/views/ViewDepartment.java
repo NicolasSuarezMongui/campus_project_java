@@ -23,9 +23,6 @@ public class ViewDepartment extends ViewMain {
                     modifyDepartment();
                     break;
                 case 4:
-                    deleteDepartment();
-                    break;
-                case 5:
                     listDepartments();
                     break;
                 default:
@@ -40,7 +37,7 @@ public class ViewDepartment extends ViewMain {
         System.out.println("\t 1) Create a new Department");
         System.out.println("\t 2) Get Department by ID");
         System.out.println("\t 3) Edit Department");
-        System.out.println("\t 4) Delete Department");
+        System.out.println("\t 4) List Department");
         System.out.println("\t 5) Return to Main Menu");
         return sc.nextInt();
     } 
@@ -59,7 +56,7 @@ public class ViewDepartment extends ViewMain {
         System.out.print("\t Department's ID: ");
         int id = sc.nextInt();
         try {
-            return serviceDepartment.getDepartment(id);
+            return serviceDepartment.findById(id);
         } catch (DepartmentNullException e) {
             System.out.println(e.getMessage());
             return null;
@@ -73,7 +70,7 @@ public class ViewDepartment extends ViewMain {
         int id = sc.nextInt();
 
         try {
-            Department department = serviceDepartment.getDepartment(id);
+            Department department = serviceDepartment.findById(id);
             System.out.println();
             department.print();
         } catch (DepartmentNullException e) {
@@ -95,26 +92,14 @@ public class ViewDepartment extends ViewMain {
                     String name = sc.nextLine();
                     department.setName(name);
                 }
-                String name = sc.nextLine();
             }while(opc < 1 || opc >= 2);
             System.out.println("Modified");
         }        
     }
 
-    private static void deleteDepartment() {
-        System.out.println("Deleting a Department...");
-        Department department = getDepartment();
-        if(department != null) {
-            serviceDepartment.delete(department);
-            System.out.println("Department deleted sucessfully");
-        } else {
-            System.out.println("Department not deleted sucessfully");
-        }
-    }
-
     private static void listDepartments() {
         System.out.println("Department's List");
-        for(Department department : serviceDepartment.list()) {
+        for(Department department : serviceDepartment.toList()) {
             department.print();
             System.out.println();
         }

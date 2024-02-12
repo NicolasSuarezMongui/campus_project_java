@@ -2,6 +2,7 @@ package com.university.services.impl;
 
 import java.util.List;
 
+import com.university.exceptions.personexceptions.PersonExceptionInsertDataBase;
 import com.university.repository.RepositoryPerson;
 import com.university.repository.models.Person;
 import com.university.services.ServicePerson;
@@ -22,7 +23,7 @@ public class ServicePersonImpl implements ServicePerson{
         return crudRepositoryPerson.findByDocument(Document);
     }
 
-    public void create(Person person){
+    public void create(Person person) throws PersonExceptionInsertDataBase{
         crudRepositoryPerson.create(person);
     }
 

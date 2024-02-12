@@ -3,6 +3,7 @@ package com.university.services.impl;
 import java.util.List;
 
 import com.university.exceptions.scheduleexceptions.ScheduleException;
+import com.university.exceptions.scheduleexceptions.ScheduleNullException;
 import com.university.repository.RepositorySchedule;
 import com.university.repository.models.Schedule;
 import com.university.services.ServiceSchedule;
@@ -19,10 +20,10 @@ public class ServiceScheduleImpl implements ServiceSchedule{
         return crudRepositorySchedule.toList();
     }
 
-    public Schedule findById(int schedule_id) throws ScheduleException{
+    public Schedule findById(int schedule_id) throws ScheduleNullException{
         Schedule schedule = crudRepositorySchedule.findById(schedule_id);
         if(schedule == null){
-            throw new ScheduleException("Schedule not found");
+            throw new ScheduleNullException("Schedule not found");
         } else {
             return schedule;
         }

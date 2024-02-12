@@ -96,6 +96,14 @@ public class RepositoryClassroomMysqlImpl implements RepositoryClassroom{
                 e1.printStackTrace();
             }
             throw new ClassroomExceptionInsertDataBase("Error creating classroom");
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         
     }

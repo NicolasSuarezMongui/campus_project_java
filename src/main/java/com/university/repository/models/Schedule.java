@@ -24,4 +24,15 @@ public class Schedule {
         this.signatureId = signatureId;
     }
 
+    public void print(){
+        System.out.println("-".repeat(30));
+        System.out.println("\t          Schedule's ID: " + id);
+        System.out.println("\t         Schedule's Day: " + day);
+        System.out.println("\t       Schedule's Start: " + start);
+        System.out.println("\t         Schedule's End: " + end);
+        System.out.println("\tSchedule's Classroom ID: " + classroomId);
+        System.out.println("\tSchedule's Signature ID: " + signatureId);
+        System.out.println("-".repeat(30));
+    }
+
 }

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.university.exceptions.personexceptions.PersonExceptionInsertDataBase;
 import com.university.repository.RepositoryStudent;
 import com.university.repository.impl.implperson.RepositoryPersonMysqlImpl;
 import com.university.repository.models.Person;
@@ -43,7 +44,7 @@ public class RepositoryStudentMysqlImpl implements RepositoryStudent{
         }
     }
 
-    public void create(Person person, int program_id) {
+    public void create(Person person, int program_id) throws PersonExceptionInsertDataBase{
 
         RepositoryPersonMysqlImpl repositoryPersonMysqlImpl = new RepositoryPersonMysqlImpl();
         repositoryPersonMysqlImpl.create(person);
@@ -83,8 +84,9 @@ public class RepositoryStudentMysqlImpl implements RepositoryStudent{
         }
     }
 
-    public void delete(int person_id) {
+    public void delete(String document) {
         RepositoryPersonMysqlImpl repositoryPersonMysqlImpl = new RepositoryPersonMysqlImpl();
+        int person_id = repositoryPersonMysqlImpl.findByDocument(document).getId();
         String sql = "DELETE FROM students WHERE person_id = ?";
 
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)){

@@ -3,6 +3,7 @@ package com.university.services.impl;
 import java.util.List;
 
 import com.university.exceptions.subjectexceptions.SubjectException;
+import com.university.exceptions.subjectexceptions.SubjectNullException;
 import com.university.repository.RepositorySignature;
 import com.university.repository.models.Signature;
 import com.university.services.ServiceSignature;
@@ -19,10 +20,10 @@ public class ServiceSignatureImpl implements ServiceSignature{
         return crudRepositorySignature.toList();
     }
 
-    public Signature findById(int signature_id) throws SubjectException{
+    public Signature findById(int signature_id) throws SubjectNullException{
         Signature signature = crudRepositorySignature.findById(signature_id);
         if(signature == null){
-            throw new SubjectException("Signature not found");
+            throw new SubjectNullException("Signature not found");
         } else {
             return signature;
         }

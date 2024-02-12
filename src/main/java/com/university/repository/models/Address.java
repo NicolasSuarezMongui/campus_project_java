@@ -23,4 +23,16 @@ public class Address {
         this.roadDist = roadDist;
     }
 
+    public String getAddress(){
+        return getRoad() + " " + getRoadNumber() + "#" + getRoadCross() + " - " + getRoadDist();
+    }
+
+    public void print() {
+        System.out.println("-".repeat(30));
+        System.out.println("\t    ID: " + getId());
+        System.out.println("\t  Road: " + getRoad() + " " + getRoadNumber());
+        System.out.println("\tCross: " + getRoadCross());
+        System.out.println("\tDist.: " + getRoadDist());
+        System.out.println("-".repeat(30));
+    }
 }

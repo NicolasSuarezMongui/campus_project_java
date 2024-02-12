@@ -2,6 +2,7 @@ package com.university.services.impl;
 
 import java.util.List;
 
+import com.university.exceptions.departmentexceptions.DepartmentNullException;
 import com.university.repository.RepositoryDepartment;
 import com.university.repository.models.Department;
 import com.university.services.ServiceDepartment;
@@ -18,7 +19,7 @@ public class ServiceDepartmentImpl implements ServiceDepartment{
         return crudRepositoryDepartment.toList();
     }
 
-    public Department findById(int department_id){
+    public Department findById(int department_id) throws DepartmentNullException{
         return crudRepositoryDepartment.findById(department_id);
     }
 

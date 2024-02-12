@@ -91,7 +91,7 @@ public class RepositoryScheduleMysqlImpl implements RepositorySchedule{
         
         List <Schedule> listSchedules = new ArrayList<>();
 
-        try (PreparedStatement pstmt = getConnection().prepareStatement("SELECT * FROM schedules WHERE signature_id IN (SELECT siganture_id FROM registers WHERE student_id = ?)");) {
+        try (PreparedStatement pstmt = getConnection().prepareStatement("SELECT * FROM schedules WHERE signature_id IN (SELECT signature_id FROM registers WHERE student_id = ?)");) {
             pstmt.setInt(1, student_id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {

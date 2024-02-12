@@ -2,7 +2,7 @@ package com.university.services.impl;
 
 import java.util.List;
 
-import com.university.exceptions.fareexceptions.FareException;
+import com.university.exceptions.fareexceptions.FareNullException;
 import com.university.repository.RepositoryTuition;
 import com.university.repository.models.Tuition;
 import com.university.services.ServiceTuition;
@@ -19,10 +19,10 @@ public class ServiceTuitionImpl implements ServiceTuition{
         return crudRepositoryTuition.toList();
     }
 
-    public Tuition findById(int tuiton_id) throws FareException{
+    public Tuition findById(int tuiton_id) throws FareNullException{
         Tuition tuiton = crudRepositoryTuition.findById(tuiton_id);
         if(tuiton == null){
-            throw new FareException("Tuition not found");
+            throw new FareNullException("Tuition not found");
         } else {
             return tuiton;
         }

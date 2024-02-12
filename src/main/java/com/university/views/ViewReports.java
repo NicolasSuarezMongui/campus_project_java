@@ -1,5 +1,10 @@
 package com.university.views;
 
+import java.util.List;
+
+import com.university.exceptions.personexceptions.PersonNullException;
+import com.university.repository.models.Schedule;
+
 public class ViewReports extends ViewMain{
 
     public static void startMenu() {
@@ -9,16 +14,19 @@ public class ViewReports extends ViewMain{
             opc = showMenu();
             switch (opc) {
                 case 1:
-                    createReport();
+                    studentByCourse();
                     break;
                 case 2:
-                    getReport();
+                    studentSemesterCost();
                     break;
                 case 3:
-                    modifyReport();
+                    incomePerSemester();
                     break;
                 case 4:
-                    deleteReport();
+                    studentSchedule();
+                    break;
+                case 5:
+                    studentsByProgram();
                     break;
                 default:
                     break;
@@ -40,21 +48,47 @@ public class ViewReports extends ViewMain{
         return sc.nextInt();
     }
 
-    private static void createReport(){
-        
-        //serviceReport.create(Report);
+    private static void studentByCourse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'studentByCourse'");
     }
 
-    private static void getReport() {
-        
+    private static void studentSemesterCost() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'studentSemesterCost'");
     }
 
-    private static void modifyReport() {
-        
+    private static void incomePerSemester() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'incomePerSemester'");
     }
 
-    private static void deleteReport() {
-      
+    private static void studentSchedule() {
+        sc.nextLine();
+        List<Schedule> schedules = null;
+        System.out.println("Enter the student's document: ");
+        String document = sc.nextLine();
+        int studentId;
+        try {
+            studentId = serviceStudent.findByDocument(document).getId();
+            schedules = serviceSchedule.toListByStudentId(studentId);
+            if(schedules != null) {
+                for(Schedule schedule : schedules) {
+                    schedule.print();
+                    System.out.println();
+                }
+            } else {
+                System.out.println("No schedules found for student with ID: " + studentId);
+            }
+        } catch (PersonNullException e) {
+            e.printStackTrace();
+        }
+        sc.next();
+    }
+
+    private static void studentsByProgram() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'studentsByProgram'");
     }
     
 }

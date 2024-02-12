@@ -35,7 +35,7 @@ public class RepositoryCityMysqlImpl implements RepositoryCity{
     @Override
     public City findByName(String name) {
         City city = null;
-        try (PreparedStatement stmt = getConnection().prepareStatement("SELECT * FROM cities WHERE name = ?");) {
+        try (PreparedStatement stmt = getConnection().prepareStatement("SELECT * FROM cities WHERE city_name = ?");) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -50,7 +50,7 @@ public class RepositoryCityMysqlImpl implements RepositoryCity{
 
     @Override
     public void create(City city) {
-        String sql = "INSERT INTO cities (name) VALUES (?)";
+        String sql = "INSERT INTO cities (city_name) VALUES (?)";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)){
             stmt.setString(1, city.getName());
             stmt.executeUpdate();
@@ -62,7 +62,7 @@ public class RepositoryCityMysqlImpl implements RepositoryCity{
 
     @Override
     public void update(City city) {
-        try (PreparedStatement stmt = getConnection().prepareStatement("UPDATE cities SET name = ? WHERE city_id = ?");) {
+        try (PreparedStatement stmt = getConnection().prepareStatement("UPDATE cities SET city_name = ? WHERE city_id = ?");) {
             stmt.setString(1, city.getName());
             stmt.setInt(2, city.getId());
             stmt.executeUpdate();
@@ -84,7 +84,7 @@ public class RepositoryCityMysqlImpl implements RepositoryCity{
     }
 
     private City createCity(ResultSet rs) throws SQLException {
-        return new City(rs.getInt("city_id"), rs.getString("name"));
+        return new City(rs.getInt("city_id"), rs.getString("city_name"));
     }
 
 }

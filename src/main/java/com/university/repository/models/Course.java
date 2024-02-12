@@ -16,4 +16,13 @@ public class Course {
         this.guide = guide;
     }
 
+    public void print(){
+        System.out.println("-".repeat(30));
+        System.out.println("\t     Course's ID: " + id);
+        System.out.println("\t   Course's Name: " + name);
+        System.out.println("\t  Course's Guide: " + guide);
+        System.out.println("-".repeat(30));
+    }
+
+
 }

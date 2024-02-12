@@ -2,6 +2,7 @@ package com.university.services.impl;
 
 import java.util.List;
 
+import com.university.exceptions.courseexceptions.CourseNullException;
 import com.university.repository.RepositoryCourse;
 import com.university.repository.models.Course;
 import com.university.services.ServiceCourse;
@@ -18,7 +19,7 @@ public class ServiceCourseImpl implements ServiceCourse{
         return crudRepositoryCourse.toList();
     }
 
-    public Course findById(int course_id) {
+    public Course findById(int course_id) throws CourseNullException{
         return crudRepositoryCourse.findById(course_id);
     }
 

@@ -14,4 +14,11 @@ public class Department {
         this.name = name;
     }
 
+    public void print() {
+        System.out.println("-".repeat(30));
+        System.out.println("\t    Department ID: " + id);
+        System.out.println("\t  Department Name: " + name);
+        System.out.println("-".repeat(30));
+    }
+
 }

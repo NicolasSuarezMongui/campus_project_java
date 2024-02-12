@@ -2,6 +2,7 @@ package com.university.repository;
 
 import java.util.List;
 
+import com.university.exceptions.personexceptions.PersonExceptionInsertDataBase;
 import com.university.repository.models.Person;
 
 public interface RepositoryPerson {
@@ -10,7 +11,7 @@ public interface RepositoryPerson {
 
     Person findByDocument(String document);
 
-    void create(Person person);
+    void create(Person person) throws PersonExceptionInsertDataBase;
 
     void update(Person person);
 

@@ -2,14 +2,14 @@ package com.university.services;
 
 import java.util.List;
 
-import com.university.exceptions.scheduleexceptions.ScheduleException;
+import com.university.exceptions.scheduleexceptions.ScheduleNullException;
 import com.university.repository.models.Schedule;
 
 public interface ServiceSchedule {
     
     List<Schedule> toList();
 
-    Schedule findById(int schedule_id) throws ScheduleException;
+    Schedule findById(int schedule_id) throws ScheduleNullException;
 
     void create(Schedule schedule);
 

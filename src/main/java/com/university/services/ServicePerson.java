@@ -2,6 +2,7 @@ package com.university.services;
 
 import java.util.List;
 
+import com.university.exceptions.personexceptions.PersonExceptionInsertDataBase;
 import com.university.repository.models.Person;
 
 public interface ServicePerson {
@@ -10,7 +11,7 @@ public interface ServicePerson {
 
     Person findByDocument(String Document);
 
-    void create(Person person);
+    void create(Person person) throws PersonExceptionInsertDataBase;
 
     void update(Person person);
 

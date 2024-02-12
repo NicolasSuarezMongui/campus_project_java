@@ -99,6 +99,14 @@ public class RepositoryPeriodMysqlImpl implements RepositoryPeriod{
                 e1.printStackTrace();
             }
             throw new PeriodExceptionInsertDataBase("Error inserting period in the database");
+        } finally {
+            try {
+                if (conn != null){ 
+                    conn.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         
     }

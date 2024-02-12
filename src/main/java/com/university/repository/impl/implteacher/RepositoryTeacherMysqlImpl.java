@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.university.exceptions.personexceptions.PersonExceptionInsertDataBase;
 import com.university.repository.RepositoryTeacher;
 import com.university.repository.impl.implperson.RepositoryPersonMysqlImpl;
 import com.university.repository.models.Person;
@@ -44,14 +45,14 @@ public class RepositoryTeacherMysqlImpl implements RepositoryTeacher{
 
     }
 
-    public void create(Person person, int department_id){
+    public void create(Person person, int department_id) throws PersonExceptionInsertDataBase{
         
         RepositoryPersonMysqlImpl repositoryPersonMysqlImpl = new RepositoryPersonMysqlImpl();
         repositoryPersonMysqlImpl.create(person);
 
         Person personCreated = repositoryPersonMysqlImpl.findByDocument(person.getDocumentNumber());
 
-        Teacher teacher = new Teacher(department_id, personCreated.getId());
+        Teacher teacher = new Teacher(personCreated.getId(), department_id);
 
         create(teacher);
 

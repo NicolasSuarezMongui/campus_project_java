@@ -23,7 +23,7 @@ public class RepositoryAddressMysqlImpl implements RepositoryAddress{
         
         List<Address> listAddress = new ArrayList<>();
         try (Statement stmt = getConnection().createStatement();) {
-            ResultSet rs = stmt.executeQuery("SELECT * FROM address");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM addresses");
             while (rs.next()) {
                 listAddress.add(createAddress(rs));
             }
@@ -37,7 +37,7 @@ public class RepositoryAddressMysqlImpl implements RepositoryAddress{
     public Address findById(int address_id) {
         Address address = null;
         try (Statement stmt = getConnection().createStatement();) {
-            ResultSet rs = stmt.executeQuery("SELECT * FROM address WHERE address_id = " + address_id);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM addresses WHERE address_id = " + address_id);
             if (rs.next()) {
                 address = createAddress(rs);
             }
@@ -50,7 +50,7 @@ public class RepositoryAddressMysqlImpl implements RepositoryAddress{
     @Override
     public void create(Address address) {
         
-        try (PreparedStatement stmt = getConnection().prepareStatement("INSERT INTO address (road, road_number, road_cross, road_dist) VALUES (?, ?, ?, ?)");) {
+        try (PreparedStatement stmt = getConnection().prepareStatement("INSERT INTO addresses (road, road_number, road_cross, road_dist) VALUES (?, ?, ?, ?)");) {
             stmt.setString(1, address.getRoad());
             stmt.setInt(2, address.getRoadNumber());
             stmt.setInt(3, address.getRoadCross());
@@ -64,7 +64,7 @@ public class RepositoryAddressMysqlImpl implements RepositoryAddress{
     @Override
     public void update(Address address) {
         
-        try (PreparedStatement stmt = getConnection().prepareStatement("UPDATE address SET road = ?, road_number = ?, road_cross = ?, road_dist = ? WHERE address_id = ?");) {
+        try (PreparedStatement stmt = getConnection().prepareStatement("UPDATE addresses SET road = ?, road_number = ?, road_cross = ?, road_dist = ? WHERE address_id = ?");) {
             stmt.setString(1, address.getRoad());
             stmt.setInt(2, address.getRoadNumber());
             stmt.setInt(3, address.getRoadCross());
@@ -80,7 +80,7 @@ public class RepositoryAddressMysqlImpl implements RepositoryAddress{
     @Override
     public void delete(Address address) {
         
-        try (PreparedStatement stmt = getConnection().prepareStatement("DELETE FROM address WHERE address_id = ?");) {
+        try (PreparedStatement stmt = getConnection().prepareStatement("DELETE FROM addresses WHERE address_id = ?");) {
             stmt.setInt(1, address.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {

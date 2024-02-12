@@ -2,7 +2,8 @@ package com.university.services.impl;
 
 import java.util.List;
 
-import com.university.exceptions.personexceptions.PersonException;
+import com.university.exceptions.personexceptions.PersonExceptionInsertDataBase;
+import com.university.exceptions.personexceptions.PersonNullException;
 import com.university.repository.RepositoryTeacher;
 import com.university.repository.models.Person;
 import com.university.repository.models.Teacher;
@@ -20,10 +21,10 @@ public class ServiceTeacherImpl implements ServiceTeacher{
         return crudRepositoryTeacher.toList();
     }
 
-    public Person findByDocument(String document) throws PersonException {
+    public Person findByDocument(String document) throws PersonNullException {
         Person person = crudRepositoryTeacher.findByDocument(document);
         if(person == null){
-            throw new PersonException("Person not found");
+            throw new PersonNullException("Person not found");
         } else {
             return person;
         }
@@ -31,6 +32,10 @@ public class ServiceTeacherImpl implements ServiceTeacher{
 
     public void create(Teacher teacher){
         crudRepositoryTeacher.create(teacher);
+    }
+
+    public void create(Person person, int id_department) throws PersonExceptionInsertDataBase {
+        crudRepositoryTeacher.create(person, id_department);
     }
 
     public void update(Teacher teacher){
