@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.university.exceptions.periodexceptions.PeriodExceptionInsertDataBase;
 import com.university.repository.RepositoryPeriod;
 import com.university.repository.models.Period;
 import com.university.utils.connectionsdb.connectiondbmysql.ConexionBDMysql;
@@ -65,14 +66,39 @@ public class RepositoryPeriodMysqlImpl implements RepositoryPeriod{
     }
 
     @Override
-    public void create(Period period) {
-        try (PreparedStatement pstmt = getConnection().prepareStatement("INSERT INTO periods (period_year, semester, period_code) VALUES (?, ?, ?)");) {
-            pstmt.setInt(1, period.getYear());
-            pstmt.setString(2, period.getSemester());
-            pstmt.setString(3, period.getCode());
-            pstmt.executeUpdate();
+    public void create(Period period) throws PeriodExceptionInsertDataBase{
+
+        Connection conn = null;
+
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement pstmt = conn.prepareStatement("INSERT INTO periods (period_year, semester, period_code) VALUES (?, ?, ?)",Statement.RETURN_GENERATED_KEYS);){
+                pstmt.setString(1, period.getYear());
+                pstmt.setString(2, period.getSemester());
+                pstmt.setString(3, period.getCode());
+                pstmt.executeUpdate();
+
+                try (ResultSet rs = pstmt.getGeneratedKeys();) {
+                    if (rs.next()) {
+                        period.setId(rs.getInt(1));
+                    } else {
+                        throw new SQLException("Error inserting period in the database");
+                    }
+                } 
+            }
+
+            conn.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                if (conn != null){ 
+                    conn.rollback();
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            throw new PeriodExceptionInsertDataBase("Error inserting period in the database");
         }
         
     }
@@ -93,7 +119,7 @@ public class RepositoryPeriodMysqlImpl implements RepositoryPeriod{
     public void update(Period period) {
         
         try (PreparedStatement pstmt = getConnection().prepareStatement("UPDATE periods SET period_year = ?, semester = ?, period_code = ? WHERE period_id = ?");) {
-            pstmt.setInt(1, period.getYear());
+            pstmt.setString(1, period.getYear());
             pstmt.setString(2, period.getSemester());
             pstmt.setString(3, period.getCode());
             pstmt.setInt(4, period.getId());
@@ -108,7 +134,7 @@ public class RepositoryPeriodMysqlImpl implements RepositoryPeriod{
         Period period = new Period();
         period.setId(rs.getInt("period_id"));
         period.setCode(rs.getString("period_code"));
-        period.setYear(rs.getInt("period_year"));
+        period.setYear(rs.getString("period_year"));
         period.setSemester(rs.getString("semester"));
         return period;
     }

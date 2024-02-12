@@ -64,9 +64,8 @@ public class RepositoryProgramMysqlImpl implements RepositoryProgram{
     }
 
     public void create(Program program){
-        try (PreparedStatement pstmt = getConnection().prepareStatement("INSERT INTO programs (program_name, program_level) VALUES (?, ?)");) {
+        try (PreparedStatement pstmt = getConnection().prepareStatement("INSERT INTO programs (program_name) VALUES (?)");) {
             pstmt.setString(1, program.getName());
-            pstmt.setString(2, program.getLevel());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

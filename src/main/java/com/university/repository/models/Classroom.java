@@ -22,4 +22,14 @@ public class Classroom {
         this.buildingId = buildingId;
     }
 
+    public void print() {
+        System.out.println("-".repeat(30));
+        System.out.println("\t    ID: " + getId());
+        System.out.println("\t  Name: " + getName());
+        System.out.println("\tLevel: " + getLevel());
+        System.out.println("\t  Cap: " + getCapacity());
+        System.out.println("\t  BID: " + getBuildingId());
+        System.out.println("-".repeat(30));
+    }
+
 }

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.university.exceptions.classroomexceptions.ClassroomExceptionInsertDataBase;
 import com.university.repository.RepositoryClassroom;
 import com.university.repository.models.Classroom;
 import com.university.utils.connectionsdb.connectiondbmysql.ConexionBDMysql;
@@ -61,15 +62,40 @@ public class RepositoryClassroomMysqlImpl implements RepositoryClassroom{
         return classroom;
     }
 
-    public void create(Classroom classroom) {
+    public void create(Classroom classroom) throws ClassroomExceptionInsertDataBase {
         
-        try (PreparedStatement pstmt = getConnection().prepareStatement("INSERT INTO classrooms (classroom_capacity, classroom_name, building_id) VALUES (?, ?, ?)");) {
-            pstmt.setInt(1, classroom.getCapacity());
-            pstmt.setString(2, classroom.getName());
-            pstmt.setInt(3, classroom.getBuildingId());
-            pstmt.executeUpdate();
+        Connection conn = null;
+
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement pstmt = conn.prepareStatement("INSERT INTO classrooms (classroom_capacity, classroom_level, classroom_code, building_id) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);) {
+                pstmt.setInt(1, classroom.getCapacity());
+                pstmt.setInt(2, classroom.getLevel());
+                pstmt.setString(3, classroom.getName());
+                pstmt.setInt(4, classroom.getBuildingId());
+                pstmt.executeUpdate();
+                try (ResultSet rs = pstmt.getGeneratedKeys();) {
+                    if (rs.next()) {
+                        classroom.setId(rs.getInt(1));
+                    } else {
+                        throw new ClassroomExceptionInsertDataBase("Error creating classroom, no ID obtained.");
+                    }
+                }
+            }
+
+            conn.commit();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            throw new ClassroomExceptionInsertDataBase("Error creating classroom");
         }
         
     }
@@ -100,7 +126,7 @@ public class RepositoryClassroomMysqlImpl implements RepositoryClassroom{
     }
     
     private Classroom createClassroom(ResultSet rs) throws SQLException {
-        return new Classroom(rs.getInt("classroom_id"), rs.getInt("classroom_capacity") ,rs.getString("classroom_name"), rs.getInt("building_id"));
+        return new Classroom(rs.getInt("classroom_id"), rs.getInt("classroom_capacity"), rs.getInt("classroom_level"), rs.getString("classroom_code"), rs.getInt("building_id"));
     }
 
 }

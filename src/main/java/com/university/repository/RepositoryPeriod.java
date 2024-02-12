@@ -2,6 +2,7 @@ package com.university.repository;
 
 import java.util.List;
 
+import com.university.exceptions.periodexceptions.PeriodExceptionInsertDataBase;
 import com.university.repository.models.Period;
 
 public interface RepositoryPeriod {
@@ -12,7 +13,7 @@ public interface RepositoryPeriod {
     
     public Period findByCode(String period_code);
     
-    public void create(Period period);
+    public void create(Period period) throws PeriodExceptionInsertDataBase;
     
     public void delete(int period_id);
     
