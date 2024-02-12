@@ -7,6 +7,7 @@ import com.university.repository.impl.implcourse.RepositoryCourseMysqlImpl;
 import com.university.repository.impl.impldepartment.RepositoryDepartmentMysqlImpl;
 import com.university.repository.impl.implperiod.RepositoryPeriodMysqlImpl;
 import com.university.repository.impl.implprogram.RepositoryProgramMysqlImpl;
+import com.university.repository.impl.implregister.RepositoryRegisterMysqlImpl;
 import com.university.repository.impl.implschedule.RepositoryScheduleMysqlImpl;
 import com.university.repository.impl.implsignature.RepositorySignatureMysqlImpl;
 import com.university.repository.impl.implstudent.RepositoryStudentMysqlImpl;
@@ -17,6 +18,7 @@ import com.university.services.ServiceCourse;
 import com.university.services.ServiceDepartment;
 import com.university.services.ServicePeriod;
 import com.university.services.ServiceProgram;
+import com.university.services.ServiceRegister;
 import com.university.services.ServiceSchedule;
 import com.university.services.ServiceSignature;
 import com.university.services.ServiceStudent;
@@ -27,6 +29,7 @@ import com.university.services.impl.ServiceCourseImpl;
 import com.university.services.impl.ServiceDepartmentImpl;
 import com.university.services.impl.ServicePeriodImpl;
 import com.university.services.impl.ServiceProgramImpl;
+import com.university.services.impl.ServiceRegisterImpl;
 import com.university.services.impl.ServiceScheduleImpl;
 import com.university.services.impl.ServiceSignatureImpl;
 import com.university.services.impl.ServiceStudentImpl;
@@ -45,6 +48,7 @@ public class ViewMain {
     public static final ServiceTuition serviceTuition = new ServiceTuitionImpl(new RepositoryTuitionMysqlImpl());
     public static final ServiceSchedule serviceSchedule = new ServiceScheduleImpl(new RepositoryScheduleMysqlImpl());
     public static final ServiceSignature serviceSignature = new ServiceSignatureImpl(new RepositorySignatureMysqlImpl());
+    public static final ServiceRegister serviceRegister = new ServiceRegisterImpl(new RepositoryRegisterMysqlImpl());
     public static final Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         

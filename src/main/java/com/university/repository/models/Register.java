@@ -20,4 +20,13 @@ public class Register {
         this.signatureId = signatureId;
     }
 
+    public void print() {
+        System.out.println("-".repeat(30));
+        System.out.println("\t    ID: " + getId());
+        System.out.println("\t  Name: " + getStudentId());
+        System.out.println("\t Level: " + getPeriodId());
+        System.out.println("\t Level: " + getSignatureId());
+        System.out.println("-".repeat(30));
+    }
+
 }

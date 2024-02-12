@@ -3,6 +3,7 @@ package com.university.services.impl;
 import java.util.List;
 
 import com.university.exceptions.registerexceptions.RegisterException;
+import com.university.exceptions.registerexceptions.RegisterNullException;
 import com.university.repository.RepositoryRegister;
 import com.university.repository.models.Register;
 import com.university.services.ServiceRegister;
@@ -19,10 +20,10 @@ public class ServiceRegisterImpl implements ServiceRegister{
         return crudRepositoryRegister.toList();
     }
 
-    public Register findById(int register_id) throws RegisterException{
+    public Register findById(int register_id) throws RegisterNullException{
         Register register = crudRepositoryRegister.findById(register_id);
         if(register == null){
-            throw new RegisterException("Register not found");
+            throw new RegisterNullException("Register not found");
         } else {
             return register;
         }
