@@ -118,7 +118,7 @@ public class RepositoryStudentMysqlImpl implements RepositoryStudent{
     }
 
     private Student createStudent(ResultSet rs) throws SQLException {
-        return new Student(rs.getInt("program_id"), rs.getInt("person_id"));
+        return new Student(rs.getInt("student_id") ,rs.getInt("program_id"), rs.getInt("person_id"));
     }
 
 }

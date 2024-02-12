@@ -20,14 +20,11 @@ public class ServiceReportsImpl {
     private final ServiceTuition serviceTuition = new ServiceTuitionImpl(new RepositoryTuitionMysqlImpl());
 
     public double semesterCost(int student_id, int period_id) {
-        Student student = null;
         double cost = 0.0;
         try {
-            student = serviceStudent.findById(student_id);
-            System.out.println(student);
+            Student student = serviceStudent.findById(student_id);
             List<Register> listRegisters = serviceRegister.listByStudentId(student.getId());
             for (Register register : listRegisters) {
-                System.out.println(register.getSignatureId());
                 cost += (serviceSignature.findById(register.getSignatureId()).getCredits()) * (serviceTuition.findByPeriodIdAndProgram(period_id, student.getProgramId()).getCreditValue());
             }
         } catch (Exception e) {
