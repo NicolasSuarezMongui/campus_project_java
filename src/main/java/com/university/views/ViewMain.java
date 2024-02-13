@@ -2,6 +2,8 @@ package com.university.views;
 
 import java.util.Scanner;
 
+import javax.swing.text.View;
+
 import com.university.repository.impl.implclassroom.RepositoryClassroomMysqlImpl;
 import com.university.repository.impl.implcourse.RepositoryCourseMysqlImpl;
 import com.university.repository.impl.impldepartment.RepositoryDepartmentMysqlImpl;
@@ -90,6 +92,9 @@ public class ViewMain {
                 case 11:
                     ViewReports.startMenu();
                     break;
+                case 12:
+                    ViewRegister.startMenu();
+                    break;
                 default:
                     break;
             }
@@ -110,6 +115,7 @@ public class ViewMain {
         System.out.println("\t 9) Classroom Management");
         System.out.println("\t10) Schedules Management");
         System.out.println("\t11) Reports");
+        System.out.println("\t12) Register");
         System.out.println("\t 0) Exit");
         System.out.println("*".repeat(47));
         System.out.print("Choose an Option: ");

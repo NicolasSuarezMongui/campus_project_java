@@ -1,3 +1,4 @@
+USE university;
 DELIMITER //
 CREATE FUNCTION validate_id_teachers (new_id int)
 RETURNS BOOLEAN DETERMINISTIC
@@ -59,4 +60,10 @@ RETURNS BOOLEAN
 DETERMINISTIC
 BEGIN
 	RETURN (SELECT id_signature IN (SELECT signture_id FROM schedules));
+END; //
+
+CREATE FUNCTION validate_signature_day(signature_day VARCHAR(10), id_signature INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+	RETURN (SELECT signature_day IN (SELECT schedule_day FROM schedules s WHERE s.signature_id = id_signature));
 END; //

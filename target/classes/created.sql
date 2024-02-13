@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS university;
+USE university;
 CREATE TABLE IF NOT EXISTS addresses (
 	address_id int NOT NULL AUTO_INCREMENT,
 	road ENUM('Calle','Carrera','Transversal') NOT NULL,

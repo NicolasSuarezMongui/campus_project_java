@@ -43,6 +43,7 @@ public class ViewRegister extends ViewMain{
         int subject = sc.nextInt();
         Register register = new Register(student, period, subject);
         serviceRegister.create(register);
+        System.out.println("Register Created");
         sc.next();
     }
     
